@@ -1,16 +1,13 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useState, useRef } from "react";
-import { auth } from "../firebase-config";
+import { useState, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/userContext";
+
 
 export default function RegisterForm() {
     const [validation, setValidation] = useState("");
-    const [currentUser, setCurrentUser] = useState("");
-    const [loadingData, setLoadingData] = useState(true);
+    const { signUp } = useContext(UserContext)
+    const navigate = useNavigate();
     const formRef = useRef();
-
-    const signUp = (email, password) => {
-        createUserWithEmailAndPassword(auth, email, password);
-    };
 
     const inputs = useRef([]);
     const addInputs = el => {
@@ -18,6 +15,7 @@ export default function RegisterForm() {
             inputs.current.push(el);
         }
     };
+    console.log(signUp)
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -32,21 +30,21 @@ export default function RegisterForm() {
             return;
         }
         try {
+            const cred = await signUp(
+                inputs.current[0].value,
+                inputs.current[1].value
+            );
 
-            const cred = await signUp(inputs.current[0].value, inputs.current[1].value)
-
-            formRef.current.reset();
             setValidation("");
-            console.log(cred)
-
-        } catch(err) {
-            if(err.code === "auth/invalid-email"){
-                setValidation("Format de l'email invalide")
+            navigate("/connexion");
+        } catch (err) {
+            if (err.code === "auth/invalid-email") {
+                setValidation("Format de l'email invalide");
             }
-            if(err.code === "auth/email-already-in-use"){
-                setValidation("Cette adresse mail existe déjà")
+            if (err.code === "auth/email-already-in-use") {
+                setValidation("Cette adresse mail existe déjà");
             }
-            setValidation("Une erreur est survenue")
+            setValidation("Une erreur est survenue");
         }
     };
 

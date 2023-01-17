@@ -10,7 +10,7 @@ export default function Login() {
                     <p>
                         Pas encore inscrit ?{" "}
                         <Link to="/inscription" className="underline">
-                            S'incrire
+                            S'inscrire
                         </Link>
                     </p>
                 </div>
