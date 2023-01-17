@@ -78,7 +78,7 @@ export default function RegisterForm() {
             />
             <p>{validation}</p>
 
-            <button type="submit" className="bg-purple rounded p-3 my-3">
+            <button type="submit" className="bg-purple rounded p-3 my-3 text-white">
                 S'inscrire
             </button>
         </form>

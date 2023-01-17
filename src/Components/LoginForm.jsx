@@ -49,7 +49,7 @@ export default function LoginForm() {
 
             <div className="text-red mt-2">{validation}</div>
 
-            <button className="bg-purple rounded py-3 my-3">Connexion</button>
+            <button className="bg-purple rounded py-3 my-3 text-white">Connexion</button>
         </form>
     );
 }
